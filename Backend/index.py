@@ -92,7 +92,7 @@ def agregarbiblioteca():
 
 # ruta /descarga , POST, recibe en el body json {nombre: }  ....  (el nombre del juego a donde se insertara)
 # solamente agrega una "," al array que tienen los jeugos de descargar entonces para contarlas solo seria
-# array.lenght y ya ..
+# array.lenght y ya .., esta solo invocala a la hora de hacer click en descargar 
 
 @app.route("/descarga",  methods=["POST"])
 def subirdescarga():
