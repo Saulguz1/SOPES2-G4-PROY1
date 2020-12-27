@@ -28,6 +28,11 @@ def prueba():
 
 
 # rutas del proyecto
+
+# ruta /addUser  post, recibe json en el body {nombre: ,user: ,password:  ,rpassword: } 
+# retorna json {message: 1} si se registro bien o {message: 0} si no coinciden las conrasenas 
+
+
 @app.route("/addUser", methods=["POST"])
 def agregarusuario(): 
     nombre = request.json['nombre']
@@ -47,6 +52,10 @@ def agregarusuario():
     return {"message":1} 
 
 
+#ruta /login  post, recibe json en el body {user: ,password: }
+# retorna un json con toda la informacion { id_user: ,nombre: , user: , password: , juegos: []}
+# y el array de juegos del usuario
+
 @app.route("/login",  methods=["POST"])
 def login():
     password = request.json['password']
@@ -56,6 +65,8 @@ def login():
     print(response)
     return Response(response, mimetype='application/json')
 
+# ruta /todosjuegos , GET, no recibe nada
+# retorna un json con todos los juegos de la tabla de juegos (la de la tienda)
 
 @app.route("/todosjuegos",  methods=["GET"])
 def juegos():
@@ -63,6 +74,10 @@ def juegos():
     response = json_util.dumps(juegos)
     return Response(response, mimetype='application/json')
 
+# ruta /addjuegousuario , POST, recibe en el body json {user: , juego: }
+# el user es el usuario donde se ira a ingresar el juego y el juego es el nombre que se toma como id del juego
+# lo inserta en el array de juegos del usuario
+# si no estoy mal retorna el array con los nuevos valores pero hay que ver xdxd
 
 @app.route("/addjuegousuario",  methods=["POST"])
 def agregarbiblioteca():
@@ -75,6 +90,10 @@ def agregarbiblioteca():
     return Response(response, mimetype='application/json')
 
 
+# ruta /descarga , POST, recibe en el body json {nombre: }  ....  (el nombre del juego a donde se insertara)
+# solamente agrega una "," al array que tienen los jeugos de descargar entonces para contarlas solo seria
+# array.lenght y ya ..
+
 @app.route("/descarga",  methods=["POST"])
 def subirdescarga():
     id_juego = request.json['nombre']
@@ -84,6 +103,10 @@ def subirdescarga():
     response = json_util.dumps(login)
     return Response(response, mimetype='application/json')
 
+# ruta /addjuegocatalogo ,POST, recibe en el body  {nombre: ,categoria: , precio: , imagen: }
+# la imagen es la url de una imagen de internet 
+# esta ruta la utilizaremos solo con postman para ingresar datos a la base de datos
+# no va implementada al proyecto solo es para llenar la tabla.
 
 @app.route("/addjuegocatalogo", methods=["POST"])
 def agregarnuevojuego(): 
