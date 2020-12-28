@@ -10,6 +10,7 @@
         <link href="../css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="../scripts/juegos.js"></script>
         
     </head>
     <style>
@@ -20,7 +21,7 @@
         background-size: cover;
         }
         </style>
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" onload="listajuegos()">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand" href="Principal.html">Proyecto</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
@@ -37,7 +38,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="biblioteca.html">Mi Biblioteca</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="Login.html">Cerrar Sesion</a>
+                        <a class="dropdown-item" onclick="CerrarSesion()">Cerrar Sesion</a>
                     </div>
                 </li>
             </ul>
@@ -56,7 +57,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Mi Biblioteca
                             </a>
-                            <a class="nav-link" href="Login.html">
+                            <a class="nav-link" onclick="CerrarSesion()">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Cerrar Sesion
                             </a>
@@ -112,60 +113,7 @@
                                                 
                                             </tr>
                                         </tfoot>
-                                        <tbody>
-                                        
-                                          
-                                                <tr>
-                                                <td align='center'> Cyberpunk 2077</td>
-                                                <td align='center'> Aventura/Rol</td>
-                                                <td align='center'> $59.99 </td>
-                                                <td align='center'> 7 </td>
-                                                <td align='center'>
-                                                    <img src="https://www.alfabetajuega.com/wp-content/uploads/2020/09/cyberpunk-2077-1.jpg"  width='130' height='150'>
-                                                    <p></p>
-                                                    <button class='btn btn-primary btn-block'  type='submit' name='submit' id='submit' value="compra">Descargar</button>
-                                                </td>  
-                                                
-                                                </tr>
-
-                                                <tr>
-                                                <td align='center'> Super Smash Bros Ultimate</td>
-                                                <td align='center'> Pelea</td>
-                                                <td align='center'> $59.99 </td>
-                                                <td align='center'> 3 </td>
-                                                <td align='center'>
-                                                    <img src="https://i.pinimg.com/originals/49/a1/9c/49a19c0808863a8301e6a507383ee271.jpg"  width='130' height='150'>
-                                                    <p></p>
-                                                    <button class='btn btn-primary btn-block'  type='submit' name='submit' id='submit' value="compra"style="background-color: green;" disabled> Tu Biblioteca</button>
-                                                </td>
-
-                                                </tr>
-                                                
-                                                <tr>
-                                                <td align='center'> Halo Infinite</td>
-                                                <td align='center'> Shooter</td>
-                                                <td align='center'> $59.99 </td>
-                                                <td align='center'> 2 </td>
-                                                <td align='center'>
-                                                    <img src="https://sm.ign.com/ign_es/screenshot/default/infinite1_hpha.jpg"  width='130' height='150'>
-                                                    <p></p>
-                                                    <button class='btn btn-primary btn-block'  type='submit' name='submit' id='submit' value="compra">Descargar</button>
-                                                </td>   
-                                                </tr>
-
-                                                <tr>
-                                                    <td align='center'> Among Us</td>
-                                                    <td align='center'> Fun</td>
-                                                    <td align='center'> $4.99 </td>
-                                                    <td align='center'> 3 </td>
-                                                    <td align='center'>
-                                                        <img src="https://www.alfabetajuega.com/wp-content/uploads/2020/09/among-us-4.jpg"  width='130' height='150'>
-                                                        <p></p>
-                                                        <button class='btn btn-primary btn-block'  type='submit' name='submit' id='submit' value="compra" style="background-color: green;" disabled> Tu Biblioteca</button>
-                                                    </td>   
-                                                    </tr>
-                                                
-                                                                               
+                                        <tbody id="tbody">                                                                               
                                         </tbody>
                                     </table>
                                 </div>

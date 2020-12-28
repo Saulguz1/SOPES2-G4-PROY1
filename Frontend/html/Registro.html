@@ -11,6 +11,7 @@
     <link href="../css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="../scripts/usuario.js"></script>
 </head>
 <style>
     body {
@@ -21,7 +22,7 @@
     }
 </style>
 
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed" onload="verLog()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         
     <a class="navbar-brand" style="font-size:50px" href="Login.html"><span style="font-family:Apple Chancery;font-weight: 900;font-size:50px;color:aqua">SOPES2</span>-Gaming</a>
@@ -85,7 +86,7 @@
                                                             </div>
                                                             
                                                      <div class="form-group mt-4 mb-0">
-                                                     <button class="btn btn-primary btn-block" type="submit" name="submit" id="submit" value="Submit">Registrarse</button>
+                                                     <button class="btn btn-primary btn-block" type="button" name="submit" id="submit" value="Submit" onclick="registro()">Registrarse</button>
                                                 </div>
                                                 </form>
                                             </div>
