@@ -1,30 +1,23 @@
-from flask import Flask, request, jsonify,Response
+from flask import Flask, request, jsonify, Response
+from flask_api import status
 from flask_pymongo import PyMongo
-from time import time
 from bson import json_util
 from pymongo import MongoClient
-import hashlib
-from botocore.exceptions import ClientError
-import base64
-import tempfile
-import uuid
-import logging
-import json
 
-
-import datetime
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 # cambiar la ip de la EC2 o localhost cuando se corra
-app.config['MONGO_URI'] = 'mongodb://database:27017/proy1'
+#app.config['MONGO_URI'] = "mongodb://root:rootpass@mongodb:27017/proy1?authSource=admin"
+app.config['MONGO_URI'] = "mongodb://root:rootpass@localhost:27017/proy1?authSource=admin"
+
 
 mongo = PyMongo(app)
 
 @app.route("/")
 def prueba():
-	return "Hola Este es el Servidor del Proyecto Sopes2!"
+	return "Hola Este es el Servidor del Proyecto Sopes2!", status.HTTP_200_OK
 
 
 # rutas del proyecto
@@ -84,9 +77,9 @@ def agregarbiblioteca():
     id_user = request.json['user']
     id_juego = request.json['juego']
     myquery = { "id_user": id_user }
-    newvalues = { "$push": {"juegos": id_amigo} }
-    login = mongo.db.usuario.update_one(myquery, newvalues)
-    response = json_util.dumps(login)
+    newvalues = { "$push": {"juegos": id_juego} }
+    addjuego = mongo.db.usuario.update_one(myquery, newvalues)
+    response = json_util.dumps(addjuego.raw_result)
     return Response(response, mimetype='application/json')
 
 
@@ -96,11 +89,11 @@ def agregarbiblioteca():
 
 @app.route("/descarga",  methods=["POST"])
 def subirdescarga():
-    id_juego = request.json['nombre']
-    myquery = { "nombre": id_juego }
+    nombre = request.json['nombre']
+    myquery = { "nombre": nombre }
     newvalues = { "$push": {"descargas": ","} }
-    login = mongo.db.usuario.update_one(myquery, newvalues)
-    response = json_util.dumps(login)
+    login = mongo.db.juego.update_one(myquery, newvalues)
+    response = json_util.dumps(login.raw_result)
     return Response(response, mimetype='application/json')
 
 # ruta /addjuegocatalogo ,POST, recibe en el body  {nombre: ,categoria: , precio: , imagen: }
@@ -110,10 +103,10 @@ def subirdescarga():
 
 @app.route("/addjuegocatalogo", methods=["POST"])
 def agregarnuevojuego(): 
-    nombre = request.json['nombre']
-    categoria = request.json['categoria'] 
-    precio = request.json['precio']
-    imagen = request.json['imagen']
+    nombre = request.json["nombre"]
+    categoria = request.json["categoria"] 
+    precio = request.json["precio"]
+    imagen = request.json["imagen"]
     idN = ""
 
     #insert mongo
@@ -122,10 +115,6 @@ def agregarnuevojuego():
             {'nombre': nombre,'categoria':categoria, 'precio':precio,'imagen':imagen, "descargas":[]}
         )
     else:
-        return {"message":0}
-    return {"message":1} 
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int("5000"), debug=True)
-
+        return {"message":0}, status.HTTP_500_INTERNAL_SERVER_ERROR
+    return {"message":1}, status.HTTP_200_OK
 
