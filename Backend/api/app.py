@@ -10,7 +10,7 @@ app.config['JSON_AS_ASCII'] = False
 
 # cambiar la ip de la EC2 o localhost cuando se corra
 #app.config['MONGO_URI'] = "mongodb://proyectoso2:proyectoso2passusac@mongodb:27017/proy1?authSource=admin"
-app.config['MONGO_URI'] = "mongodb://proyectoso2:proyectoso2passusac@mongodb:27017/proy1?authSource=admin"
+app.config['MONGO_URI'] = "mongodb://proyectoso2:proyectoso2passusac@34.71.30.237:27017/proy1?authSource=admin"
 
 
 mongo = PyMongo(app)
