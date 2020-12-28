@@ -79,8 +79,7 @@ def agregarbiblioteca():
     myquery = { "id_user": id_user }
     newvalues = { "$push": {"juegos": id_juego} }
     addjuego = mongo.db.usuario.update_one(myquery, newvalues)
-    response = json_util.dumps(addjuego.raw_result)
-    return Response(response, mimetype='application/json')
+    return {"message":0}
 
 
 # ruta /descarga , POST, recibe en el body json {nombre: }  ....  (el nombre del juego a donde se insertara)
@@ -91,10 +90,9 @@ def agregarbiblioteca():
 def subirdescarga():
     nombre = request.json['nombre']
     myquery = { "nombre": nombre }
-    newvalues = { "$push": {"descargas": ","} }
-    login = mongo.db.juego.update_one(myquery, newvalues)
-    response = json_util.dumps(login.raw_result)
-    return Response(response, mimetype='application/json')
+    newvalues = { "$push": {"descargas": "new"} }
+    adddescarga = mongo.db.juego.update_one(myquery, newvalues)
+    return {"message":0}
 
 # ruta /addjuegocatalogo ,POST, recibe en el body  {nombre: ,categoria: , precio: , imagen: }
 # la imagen es la url de una imagen de internet 
