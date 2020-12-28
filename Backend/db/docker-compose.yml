@@ -2,13 +2,16 @@ version: "3.8"
 
 services:
   database:
-    image: mongo
+    image: mongo:latest
     container_name: "mongodb"
     environment: 
         MONGO_INITDB_DATABASE: proy1
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: rootpass
-    volumes:
-        - ~/mongo/db-data:/data/db
+        MONGO_INITDB_ROOT_USERNAME: proyectoso2
+        MONGO_INITDB_ROOT_PASSWORD: proyectoso2passusac
+    volumes: 
+        - ~/mongo/data:/data/db
     ports:
         - "27017:27017"
+
+volumes:
+    data:

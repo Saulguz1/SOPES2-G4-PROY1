@@ -7,5 +7,5 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . .
 #CMD ["python", "-u", "app.py"]
-CMD ["flask", "run", "-p 80"]
-EXPOSE 80
+CMD ["flask", "run", "-p 8091"]
+EXPOSE 8091
