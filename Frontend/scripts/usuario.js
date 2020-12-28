@@ -1,4 +1,4 @@
-const ip = 'http://localhost:5000/'
+const ip = 'http://backendservice/'
 
 
 function verLog(){
