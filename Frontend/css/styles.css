@@ -209,7 +209,10 @@ svg {
 table {
   border-collapse: collapse;
 }
-
+.bordered td, .bordered th {
+  padding: 10px;
+  text-align: left;
+}
 caption {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
