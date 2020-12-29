@@ -25,8 +25,6 @@
 
 - Descripcion de la Aplicacion 
 
-- Algoritmo 
-
 - Desarrollo de la Configuracion
     - Frontend
     - Backend
@@ -42,28 +40,64 @@
 ---
 ---
 ## Requerimientos Tecnicos y Herramientas
+Es necesario crear un cluster en GCP utilizando dos nodos de la máquina e2-standard-2.
+Se debe crear una VM con mongoDB instalado, para lo cual utilizaremos el _docker-file_ ubicado en /Backend/db.
 
 ---
 ---
 ## Descripcion de la Aplicacion 
-
----
----
-## Algoritmo 
+La aplicación es una pequeña web app para el manejo de descargas de juegos y manejo básico de usuarios.
+Cuenta con control de usuarios, creación de usuarios, login, catálogo de juegos y descarga de juegos por usuario.
 
 ---
 ---
 ## Desarrollo de la Configuracion
+Se siguieron los siguientes pasos para crear la aplicación.
+
 ---
+*Creación del cluster:*
+
+```gcloud container clusters create proyecto1 --num-nodes=2 --tags=allin,allout --enable-legacy-authorization --enable-basic-auth --issue-client-certificate --machine-type=e2-standard-2```
+
+*Creación de namespace*
+```kubectl create namespace project```
 
 > Frontend
+
+*Creación y exposición del deployment para frontend utilizando Load Balancer*
+
+```
+kubectl create deployment frontend --image=registry.hub.docker.com/petzydrummer/frontendso2 -n project
+```
+
+```
+kubectl expose deployment frontend  --name=frontendservice  --port=80 --target-port=80 --type=LoadBalancer -n project
+```
+
+
 ---
 
 > Backend
 
+*Creación de deployment de backend y exposición del mismo utilizando un Load Balancer*
+
+
+```
+kubectl create deployment backend --image=registry.hub.docker.com/petzydrummer/gamesapi -n project
+```
+```
+kubectl expose deployment backend  --name=backendservice  --port=80 --target-port=8091 --type=LoadBalancer -n project
+```
+
 ---
 ---
 ## Pasos para realizar un Deploy en Kubernete
+Para realizar un deployment podemos seguir los pasos anteriormente mencionados o también podremos utlizar los archivos declarativos YAML para cada parte de la aplicación (Backend y Frontend), de la siguiente manera.
+
+```
+kubectl replace -f backend.yaml
+kubectl replace -f frontend.yaml
+```
 
 ---
 ---
