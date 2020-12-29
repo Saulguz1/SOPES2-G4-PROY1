@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+  namespace: project
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: registry.hub.docker.com/petzydrummer/gamesapi
+        imagePullPolicy: Always
+        name: gamesapi
+      restartPolicy: Always

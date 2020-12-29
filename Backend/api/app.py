@@ -1,23 +1,26 @@
 from flask import Flask, request, jsonify, Response
 from flask_api import status
+from flask_cors import CORS
 from flask_pymongo import PyMongo
 from bson import json_util
 from pymongo import MongoClient
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['JSON_AS_ASCII'] = False
 
 # cambiar la ip de la EC2 o localhost cuando se corra
 #app.config['MONGO_URI'] = "mongodb://proyectoso2:proyectoso2passusac@mongodb:27017/proy1?authSource=admin"
 app.config['MONGO_URI'] = "mongodb://proyectoso2:proyectoso2passusac@34.71.30.237:27017/proy1?authSource=admin"
 
-
 mongo = PyMongo(app)
 
 @app.route("/")
 def prueba():
-	return "Hola Este es el Servidor del Proyecto Sopes2!", status.HTTP_200_OK
+    response = jsonify({"message": "Hola Este es el Servidor del Proyecto Sopes2!"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 # rutas del proyecto
@@ -34,15 +37,21 @@ def agregarusuario():
     rpassword = request.json['rpassword']
     idN = ""
     if(password != rpassword):
-         return {"message":0}
+        response = jsonify({"message":0})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     #insert mongo
     if( nombre and user and password):
         idN = mongo.db.usuario.insert(
             {'id_user': user,'nombre':nombre, 'user':user,'password':password, "juegos":[]}
         )
     else:
-        return {"message":0}
-    return {"message":1} 
+        response = jsonify({"message":0})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    response = jsonify({"message":1})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 #ruta /login  post, recibe json en el body {user: ,password: }
@@ -56,7 +65,9 @@ def login():
     login = mongo.db.usuario.find({ 'user': user , 'password': password } )
     response = json_util.dumps(login)
     print(response)
-    return Response(response, mimetype='application/json')
+    response = Response(response, mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 # ruta /todosjuegos , GET, no recibe nada
 # retorna un json con todos los juegos de la tabla de juegos (la de la tienda)
@@ -65,7 +76,9 @@ def login():
 def juegos():
     juegos = mongo.db.juego.find({})
     response = json_util.dumps(juegos)
-    return Response(response, mimetype='application/json')
+    response = Response(response, mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 # ruta /addjuegousuario , POST, recibe en el body json {user: , juego: }
 # el user es el usuario donde se ira a ingresar el juego y el juego es el nombre que se toma como id del juego
@@ -79,7 +92,9 @@ def agregarbiblioteca():
     myquery = { "id_user": id_user }
     newvalues = { "$push": {"juegos": id_juego} }
     addjuego = mongo.db.usuario.update_one(myquery, newvalues)
-    return {"message":0}
+    response = jsonify({"message":0})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 # ruta /descarga , POST, recibe en el body json {nombre: }  ....  (el nombre del juego a donde se insertara)
@@ -92,7 +107,9 @@ def subirdescarga():
     myquery = { "nombre": nombre }
     newvalues = { "$push": {"descargas": "new"} }
     adddescarga = mongo.db.juego.update_one(myquery, newvalues)
-    return {"message":0}
+    response = jsonify({"message":0})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 # ruta /addjuegocatalogo ,POST, recibe en el body  {nombre: ,categoria: , precio: , imagen: }
 # la imagen es la url de una imagen de internet 
@@ -113,6 +130,10 @@ def agregarnuevojuego():
             {'nombre': nombre,'categoria':categoria, 'precio':precio,'imagen':imagen, "descargas":[]}
         )
     else:
-        return {"message":0}, status.HTTP_500_INTERNAL_SERVER_ERROR
-    return {"message":1}, status.HTTP_200_OK
+        response = jsonify({"message":0})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    response = jsonify({"message":1})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
