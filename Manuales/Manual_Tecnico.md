@@ -48,6 +48,9 @@ Se debe crear una VM con mongoDB instalado, para lo cual utilizaremos el _docker
 ## Descripcion de la Aplicacion 
 La aplicación es una pequeña web app para el manejo de descargas de juegos y manejo básico de usuarios.
 Cuenta con control de usuarios, creación de usuarios, login, catálogo de juegos y descarga de juegos por usuario.
+Todo esto utilizando dividiendo la aplicación en 2 partes importantes como el Backend y el Frontend.
+El Backend se creó utilizando una pequeña RESTful API con Python, específicamente en Flask, y el Frontend se creó utilizando HTML y vanilla JavaScript.
+
 
 ---
 ---
