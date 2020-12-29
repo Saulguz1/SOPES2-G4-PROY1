@@ -157,6 +157,7 @@ Despues de crear todas las graficas necesarias configuramos a que se refresquen 
 ## Querys Utilizadas
 
 >Porcentage de Utilizacion de CPU
+
 `100 - (avg by (instance) (irate(node_cpu_seconds_total{job="node",mode="idle"}[1m])) * 100)`
 
 >Porcentage de memoria usada
